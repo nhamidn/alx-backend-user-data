@@ -59,21 +59,17 @@ def get_logger() -> logging.Logger:
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """function that Returns a connector to a MySQL database."""
-    db = environ.get('PERSONAL_DATA_DB_NAME')
-    if not db:
-        msg = "The environment variable PERSONAL_DATA_DB_NAME must be set."
-        raise ValueError(msg)
-    db_connect = mysql.connector.connect(
-        user=environ.get('PERSONAL_DATA_DB_USERNAME', 'root'),
-        password=environ.get('PERSONAL_DATA_DB_PASSWORD', ''),
-        host=environ.get('PERSONAL_DATA_DB_HOST', 'localhost'),
-        database=db
+    cnx = mysql.connector.connection.MySQLConnection(
+      user=os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
+      password=os.getenv('PERSONAL_DATA_DB_PASSWORD', ''),
+      host=os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
+      database=os.getenv('PERSONAL_DATA_DB_NAME')
     )
-    return db_connect
+    return cnx
 
 
 def main() -> None:
-    """main function."""
+    """main function of the module."""
     db = get_db()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM users;")
