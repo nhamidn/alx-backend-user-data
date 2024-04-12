@@ -6,7 +6,7 @@ filtred_logger module.
 import re
 from typing import List
 import logging
-from os import environ
+import os
 import mysql.connector
 
 
