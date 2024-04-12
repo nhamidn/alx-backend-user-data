@@ -59,11 +59,15 @@ def get_logger() -> logging.Logger:
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """function that Returns a connector to a MySQL database."""
+    db = environ.get('PERSONAL_DATA_DB_NAME')
+    if not db:
+        msg = "The environment variable PERSONAL_DATA_DB_NAME must be set."
+        raise ValueError(msg)
     db_connect = mysql.connector.connect(
         user=environ.get('PERSONAL_DATA_DB_USERNAME', 'root'),
         password=environ.get('PERSONAL_DATA_DB_PASSWORD', ''),
         host=environ.get('PERSONAL_DATA_DB_HOST', 'localhost'),
-        database=environ.get('PERSONAL_DATA_DB_NAME')
+        database=db
     )
     return db_connect
 
