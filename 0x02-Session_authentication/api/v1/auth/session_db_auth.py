@@ -21,14 +21,24 @@ class SessionDBAuth(SessionExpAuth):
         }
         user = UserSession(**kw)
         user.save()
+        UserSession.save_to_file()
         return session_id
 
     def user_id_for_session_id(self, session_id=None):
         """returns the User ID from database based on session_id."""
-        user_id = UserSession.search({"session_id": session_id})
-        if user_id:
-            return user_id
-        return None
+        if session_id is None:
+            return None
+
+        UserSession.load_from_file()
+        user_session = UserSession.search({"session_id": session_id})
+        if not user_session:
+            return None
+        user_session = user_session[0]
+        expired_time = user_session.created_at + \
+            timedelta(seconds=self.session_duration)
+        if expired_time < datetime.utcnow():
+            return None
+        return user_session.user_id
 
     def destroy_session(self, request=None):
         """destroys the UserSession based on the Session ID."""
