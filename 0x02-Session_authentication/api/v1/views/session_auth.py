@@ -4,6 +4,7 @@
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models.user import User
+import os
 
 
 @app_views.route('/auth_session/login', methods=['POST'],
