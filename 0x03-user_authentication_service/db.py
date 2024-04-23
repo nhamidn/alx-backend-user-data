@@ -41,7 +41,7 @@ class DB:
         self._session.commit()
         return new_user
 
-    def find_user_by(self, **kwargs: Dict) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """Returns the first row found in the users filtered by arguments."""
         if not kwargs:
             raise InvalidRequestError
