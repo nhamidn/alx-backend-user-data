@@ -9,29 +9,21 @@ app = Flask(__name__)
 AUTH = Auth()
 
 
-@app.route('/reset_password', methods=['PUT'])
-def update_password() -> str:
-    """ PUT /reset_password
-    Updates password with reset token
-    Return:
-        - 400 if bad request
-        - 403 if not valid reset token
-        - 200 and JSON Payload if valid
-    """
+@app.route("/reset_password", methods=["PUT"])
+def update_password():
+    """end-point to update a user's password."""
     try:
-        email = request.form['email']
-        reset_token = request.form['reset_token']
-        new_password = request.form['new_password']
+        email = request.form["email"]
+        reset_token = request.form["reset_token"]
+        new_password = request.form["new_password"]
     except KeyError:
         abort(400)
-
     try:
         AUTH.update_password(reset_token, new_password)
-    except ValueError:
-        abort(403)
-
-    msg = {"email": email, "message": "Password updated"}
-    return jsonify(msg), 200
+        return jsonify({"email": "%s" % email, "message": "Password updated"})
+    except Exception:
+        pass
+    abort(403)
 
 
 @app.route('/reset_password', methods=['POST'], strict_slashes=False)
