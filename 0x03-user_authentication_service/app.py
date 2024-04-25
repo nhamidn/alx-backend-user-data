@@ -13,9 +13,9 @@ AUTH = Auth()
 def update_password():
     """end-point to update a user's password."""
     try:
-        email = request.form.get("email")
-        reset_token = request.form.get("reset_token")
-        new_password = request.form.get("new_password")
+        email = request.form["email"]
+        reset_token = request.form["reset_token"]
+        new_password = request.form["new_password"]
     except KeyError:
         abort(400)
     try:
