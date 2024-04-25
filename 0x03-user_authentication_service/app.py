@@ -20,7 +20,7 @@ def update_password():
         msg = {"email": email, "message": "Password updated"}
         return jsonify(msg), 200
     except ValueError:
-        return jsonify({}), 403
+        return abort(403)
 
 
 @app.route('/reset_password', methods=['POST'], strict_slashes=False)
