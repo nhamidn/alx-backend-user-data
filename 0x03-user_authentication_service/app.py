@@ -10,7 +10,7 @@ AUTH = Auth()
 
 
 @app.route('/reset_password', methods=['PUT'], strict_slashes=False)
-def update_password() -> str:
+def update_password():
     """end-point to update password."""
     try:
         email = request.form['email']
