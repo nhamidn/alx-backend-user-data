@@ -62,6 +62,17 @@ def profile_logged(session_id: str) -> None:
     assert response.json() == msg
 
 
+def log_out(session_id: str) -> None:
+    """Test function for logging out."""
+    cookies = {
+        "session_id": session_id
+    }
+    response = requests.delete(f'{BASE_URL}/sessions', cookies=cookies)
+    msg = {"message": "Bienvenue"}
+    assert response.status_code == 200
+    assert response.json() == msg
+
+
 EMAIL = "guillaume@holberton.io"
 PASSWD = "b4l0u"
 NEW_PASSWD = "t4rt1fl3tt3"
@@ -74,3 +85,4 @@ if __name__ == "__main__":
     profile_unlogged()
     session_id = log_in(EMAIL, PASSWD)
     profile_logged(session_id)
+    log_out(session_id)
