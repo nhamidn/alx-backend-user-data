@@ -14,16 +14,12 @@ def update_password():
     """end-point to update a user's password."""
     try:
         email = request.form["email"]
-        reset_token = request.form["reset_token"]
+        token = request.form["reset_token"]
         new_password = request.form["new_password"]
-    except KeyError:
-        abort(400)
-    try:
-        AUTH.update_password(reset_token, new_password)
-        return jsonify({"email": "%s" % email, "message": "Password updated"})
+        AUTH.update_password(token, new_password)
     except Exception:
-        pass
-    abort(403)
+        abort(403)
+    return jsonify({"email": email, "message": "Password updated"}), 200
 
 
 @app.route('/reset_password', methods=['POST'], strict_slashes=False)
