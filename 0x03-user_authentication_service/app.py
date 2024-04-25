@@ -9,9 +9,9 @@ app = Flask(__name__)
 AUTH = Auth()
 
 
-@app.route('/reset_password', methods=['PUT'], strict_slashes=False)
+@app.route('/reset_password', methods=['PUT'])
 def update_password():
-    """end-point to update password."""
+    """end-point to update a user's password."""
     try:
         email = request.form['email']
         reset_token = request.form['reset_token']
