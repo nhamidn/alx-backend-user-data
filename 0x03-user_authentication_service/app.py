@@ -9,8 +9,8 @@ app = Flask(__name__)
 AUTH = Auth()
 
 
-@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
-def logout() -> str:
+@app.route('/sessions', methods=['DELETE'])
+def logout():
     """end-point to logout."""
     session_id = request.cookies.get("session_id", None)
     if session_id is None:
