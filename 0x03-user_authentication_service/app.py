@@ -10,8 +10,8 @@ AUTH = Auth()
 
 
 @app.route('/sessions', methods=['DELETE'])
-def log_out():
-    """end-point to logout."""
+def logout():
+    """end-point to logout and redirect to home."""
     session_id = request.cookies.get("session_id", None)
     if session_id is None:
         abort(403)
