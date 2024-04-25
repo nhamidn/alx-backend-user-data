@@ -9,6 +9,21 @@ app = Flask(__name__)
 AUTH = Auth()
 
 
+@app.route('/reset_password', methods=['POST'], strict_slashes=False)
+def get_reset_password_token() -> str:
+    """end-point to get reset password token."""
+    try:
+        email = request.form['email']
+    except KeyError:
+        abort(403)
+    try:
+        reset_token = AUTH.get_reset_password_token(email)
+    except ValueError:
+        abort(403)
+    msg = {"email": email, "reset_token": reset_token}
+    return jsonify(msg), 200
+
+
 @app.route('/profile', methods=['GET'], strict_slashes=False)
 def profile():
     """end-point for profile."""
@@ -55,7 +70,7 @@ def login():
     return response
 
 
-@app.route("/users", methods=["POST"])
+@app.route("/users", methods=["POST"], strict_slashes=False)
 def users():
     """end-point to register a user."""
     try:
