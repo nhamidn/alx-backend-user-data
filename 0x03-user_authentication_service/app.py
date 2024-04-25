@@ -10,7 +10,7 @@ AUTH = Auth()
 
 
 @app.route('/sessions', methods=['DELETE'])
-def logout():
+def log_out():
     """end-point to logout."""
     session_id = request.cookies.get("session_id", None)
     if session_id is None:
