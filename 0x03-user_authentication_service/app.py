@@ -23,6 +23,7 @@ def update_password():
         is_password_changed = False
     if not is_password_changed:
         abort(403)
+    return jsonify({"email": email, "message": "Password updated"})
 
 
 @app.route('/reset_password', methods=['POST'], strict_slashes=False)
