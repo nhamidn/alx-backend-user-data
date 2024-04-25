@@ -20,10 +20,10 @@ def update_password():
         abort(400)
     try:
         AUTH.update_password(reset_token, new_password)
+        msg = {"email": email, "message": "Password updated"}
+        return jsonify(msg), 200
     except ValueError:
         abort(403)
-    msg = {"email": email, "message": "Password updated"}
-    return jsonify(msg), 200
 
 
 @app.route('/reset_password', methods=['POST'], strict_slashes=False)
