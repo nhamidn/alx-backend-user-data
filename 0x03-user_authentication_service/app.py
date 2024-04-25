@@ -10,7 +10,7 @@ AUTH = Auth()
 
 
 @app.route('/reset_password', methods=['PUT'], strict_slashes=False)
-def update_password():
+def update_password() -> str:
     """end-point to update a user's password."""
     email = request.form.get("email")
     reset_token = request.form.get("reset_token")
