@@ -9,20 +9,15 @@ app = Flask(__name__)
 AUTH = Auth()
 
 
-@app.route('/sessions', methods=['DELETE'])
-def logout():
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+def logout() -> str:
     """end-point to logout and redirect to home."""
-    session_id = request.cookies.get("session_id", None)
-    if session_id is None:
-        abort(403)
-
+        session_id = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
     if user is None:
         abort(403)
-
     AUTH.destroy_session(user.id)
-
-    return redirect('/')
+    return redirect("/")
 
 
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
