@@ -104,4 +104,5 @@ def users():
 
 @app.route("/", methods=["GET"])
 def home():
+    "end-poit for home."
     return jsonify({"message": "Bienvenue"})
